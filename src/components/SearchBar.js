@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 class SearchBar extends React.Component {
     state = {locationTerm: ''};
 
@@ -12,6 +10,7 @@ class SearchBar extends React.Component {
     onFormSub = event => {
         //do not want to automatically rerender the page
         event.preventDefault();
+        //using the function passed in onSearchSubmit with the location term collected
         this.props.onSearchSubmit(this.state.locationTerm);
     }
 

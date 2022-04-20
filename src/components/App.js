@@ -15,11 +15,12 @@ import randomUser from "../apis/randomUser";
 class App extends React.Component{
     state = {videos: [], realtor: null, selectedVideo: null, location: null}
 
+    //when the components mounts we want to do a pre fetch with a generic search term that will be updated with user input
     componentDidMount() {
         this.onSearchSubmit('Boise').then(r => console.log('started'));
     }
 
-    //fetch videos async
+    //fetch videos async and fake realtor data
     onSearchSubmit = async term => {
         await this.fetchVideos(term);
         await this.fetchRealtorData(term);
