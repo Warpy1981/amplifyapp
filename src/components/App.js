@@ -4,6 +4,7 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import VideoList from "./VideoList";
 import VideoDetail from "./VideoDetail";
+import RealtorCard from "./RealtorCard";
 
 //apis
 import youtube from "../apis/youtube";
@@ -12,7 +13,7 @@ import randomUser from "../apis/randomUser";
 
 
 class App extends React.Component{
-    state = {videos: [], realtor: null, selectedVideo: null}
+    state = {videos: [], realtor: null, selectedVideo: null, location: null}
 
     componentDidMount() {
         this.onSearchSubmit('Boise').then(r => console.log('started'));
@@ -43,7 +44,10 @@ class App extends React.Component{
     fetchRealtorData = async term => {
         const resp = await randomUser.get("");
         console.log(resp.data.results[0]);
-        this.setState({realtor: resp.data.results[0]})
+        this.setState({
+            realtor: resp.data.results[0],
+            location: term
+        })
     }
 
     //method to use as a call back when a video is selected
@@ -57,7 +61,10 @@ class App extends React.Component{
             <SearchBar onSearchSubmit={this.onSearchSubmit} />
             <div className={'ui grid'}>
                 <div className={'ui row'}>
-                    <div className={'eleven wide column'}><VideoDetail video={this.state.selectedVideo}/></div>
+                    <div className={'eleven wide column'}>
+                        <RealtorCard realtor={this.state.realtor} location={this.state.location}/>
+                        <VideoDetail video={this.state.selectedVideo}/>
+                    </div>
 
                     <div className={'five wide column'}><VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} /></div>
                 </div>
